@@ -5,14 +5,15 @@
 
     <div class="py-6 max-w-3xl mx-auto bg-white p-6 rounded shadow space-y-4">
         <!-- The whole future lies in uncertainty: live immediately. - Seneca -->
-        <form action="{{ route('admin.users.roles.update', $user) }}">
+        <form method="POST" action="{{ route('admin.users.roles.update', $user) }}">
             @csrf
             @method('PUT')
 
             <div class="space-y-2">
                 @foreach ($roles as $role)
                     <label class="flex items-center gap-2">
-                        <input type="checkbox" name="roles[]" value="{{ $role->name }}">
+                        <input type="checkbox" name="roles[]" value="{{ $role->name }}" 
+                        @checked(in_array($role->name, $userRoleNames))>
                         <span>{{ $role->name }}</span>
                     </label>
                 @endforeach
