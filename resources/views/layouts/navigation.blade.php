@@ -16,6 +16,15 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <!-- Lien vers la page publique -->
+                <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                    Accueil
+                </x-nav-link>
+                @auth
+                    <x-nav-link href="{{ route('posts.index') }}" :active="request()->routeIs('posts.*')">
+                        Mes articles
+                    </x-nav-link>
+                @endauth
             </div>
 
             <!-- Settings Dropdown -->

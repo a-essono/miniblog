@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\UserRoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'publicIndex'])->name('home');
@@ -43,3 +44,12 @@ Route::prefix('dashboard')
 });
 
 Route::get('/posts/{post:slug}', [PostController::class, 'publicShow'])->name('posts.public.show');
+
+Route::prefix('admin')
+->name('admin.')
+->middleware(['auth', 'verified', 'permission:users.manage'])
+->group(function () {
+    Route::get('users', [UserRoleController::class, 'index'])->name('users.index');
+    Route::get('users/{user}/roles', [UserRoleController::class, 'edit'])->name('users.roles.edit');
+    Route::put('users/{user}/roles', [UserRoleController::class, 'update'])->name('users.roles.update');
+});
